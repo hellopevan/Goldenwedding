@@ -1,0 +1,125 @@
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Toaster } from "./components/ui/sonner";
+import { ScrollToTop } from "./components/ScrollToTop";
+import { ColorTransitionOverlay } from "./components/ColorTransitionOverlay";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { ThemeProvider, useTheme } from "next-themes";
+import { GlitterBackground } from "./components/GlitterBackground";
+import { WavyDivider } from "./components/WavyDivider";
+import Index from "./pages/Index";
+import Vehicules from "./pages/Vehicules";
+import Services from "./pages/Services";
+import TransportVIP from "./pages/TransportVIP";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
+
+function AnimatedRoutes() {
+  const location = useLocation();
+  const [isDark, setIsDark] = useState(false);
+
+  // Check if current route is a dark page
+  useEffect(() => {
+    setIsDark(location.pathname === '/vehicules' || location.pathname === '/transport-vip');
+  }, [location]);
+
+  return (
+    <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+      {/* Glitter background for dark pages */}
+      {isDark && <GlitterBackground />}
+      
+      {/* Wavy divider at the top */}
+      <WavyDivider className="-mt-8 -mb-16" color={isDark ? "#D4AF37" : "#D4AF37"} />
+      
+      <ColorTransitionOverlay />
+      
+      <Header />
+      
+      <main className="relative z-10">
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <Index />
+              </motion.div>
+            } />
+            <Route path="/vehicules" element={
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-gray-900 text-white"
+              >
+                <Vehicules />
+              </motion.div>
+            } />
+            <Route path="/services" element={
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <Services />
+              </motion.div>
+            } />
+            <Route path="/transport-vip" element={
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-gray-900 text-white"
+              >
+                <TransportVIP />
+              </motion.div>
+            } />
+            <Route path="/contact" element={
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <Contact />
+              </motion.div>
+            } />
+            <Route path="*" element={
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <NotFound />
+              </motion.div>
+            } />
+          </Routes>
+        </AnimatePresence>
+      </main>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider attribute="class" defaultTheme="light">
+      <BrowserRouter>
+        <ScrollToTop />
+        <Toaster position="top-center" />
+        <AnimatedRoutes />
+        <Footer />
+      </BrowserRouter>
+    </ThemeProvider>
+  );
+}
+
+export default App;
