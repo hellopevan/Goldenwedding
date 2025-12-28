@@ -111,7 +111,7 @@ const vehicles: Vehicle[] = [
   {
     name: "Rolls-Royce Phantom",
     image: rollsRoycePhantomBlack,
-    seats: 5,
+    seats: 4,
     features: [
       { text: "Summum du luxe automobile", icon: "crown" },
       { text: "Raffinement absolu", icon: "gem" },
@@ -133,7 +133,7 @@ const vehicles: Vehicle[] = [
   {
     name: "Mercedes Classe G",
     image: mercedesGWagon,
-    seats: 5,
+    seats: 4,
     features: [
       { text: "Puissance tout-terrain", icon: "mountain" },
       { text: "Design iconique", icon: "shield" },
